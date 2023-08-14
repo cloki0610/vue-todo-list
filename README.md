@@ -2,13 +2,13 @@
 
 CRUD Features:
 
-- Option to Create To Do task.
+- Option to Create To Do task (with form modal).
 
-- Option to Update To Do task.
+- Option to Update To Do task (with form modal).
 
-- Option to Delete To Do task (confirmation modal / pop-up).
+- Option to Delete To Do task (with confirmation modal).
 
-- Option to View all To Do tasks (only pending).
+- Option to View all To Do tasks.
 
 Other Features:
 
