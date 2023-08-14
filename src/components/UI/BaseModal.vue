@@ -9,9 +9,10 @@
   <base-container
     v-if="show"
     class="fixed top-50 left-50 z-20 bg-secondary w-[90%] md:w-[600px]"
-    ><task-form v-if="$store.state.formModal" /><task-confirm
-      v-if="$store.state.confirmModal"
-  /></base-container>
+  >
+    <task-form v-if="$store.state.formModal" />
+    <task-confirm v-if="$store.state.confirmModal" />
+  </base-container>
 </template>
 
 <script lang="ts">
