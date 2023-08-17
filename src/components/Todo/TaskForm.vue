@@ -1,32 +1,36 @@
 <template>
-  <form @submit.prevent="submitForm" class="m-10">
-    <h1 class="font-bold text-4xl text-center mb-10 select-none">
-      {{ $store.state.formType === "ADD" ? "New Task" : "Update Task" }}
-    </h1>
-    <div
-      :class="`my-[0.5rem] ${!description.isValid && 'border-1 border-[red]'}`"
-    >
-      <label for="description">Description</label>
-      <input
-        type="text"
-        class="w-full p-2 mt-3 h-8 rounded"
-        name="description"
-        v-model.trim="description.val"
-        @blur="clearValidity('description')"
-      />
-      <p v-if="!description.isValid" class="text-[red]">
-        Task description must not be empty.
-      </p>
-    </div>
-    <div class="mt-8 flex justify-center gap-10">
-      <base-button type="submit" class="bg-black text-white">{{
-        $store.state.formType === "ADD" ? "Create" : "Update"
-      }}</base-button>
-      <base-button type="button" class="bg-primary" @click="closeModal"
-        >Close</base-button
+  <base-modal>
+    <form @submit.prevent="submitForm" class="m-10">
+      <h1 class="font-bold text-4xl text-center mb-10 select-none">
+        {{ $store.state.formType === "ADD" ? "New Task" : "Update Task" }}
+      </h1>
+      <div
+        :class="`my-[0.5rem] ${
+          !description.isValid && 'border-1 border-[red]'
+        }`"
       >
-    </div>
-  </form>
+        <label for="description">Description</label>
+        <input
+          type="text"
+          class="w-full p-2 mt-3 h-8 rounded"
+          name="description"
+          v-model.trim="description.val"
+          @blur="clearValidity('description')"
+        />
+        <p v-if="!description.isValid" class="text-[red]">
+          Task description must not be empty.
+        </p>
+      </div>
+      <div class="mt-8 flex justify-center gap-10">
+        <base-button type="submit" class="bg-black text-white">{{
+          $store.state.formType === "ADD" ? "Create" : "Update"
+        }}</base-button>
+        <base-button type="button" class="bg-primary" @click="closeModal">
+          Close
+        </base-button>
+      </div>
+    </form>
+  </base-modal>
 </template>
 
 <script lang="ts">

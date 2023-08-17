@@ -10,4 +10,7 @@ export default {
     );
     return state.todoList[itemIndex];
   },
+  IS_MODAL_OPEN(state: StoreState) {
+    return state.formModal || state.confirmModal;
+  },
 };

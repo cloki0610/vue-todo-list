@@ -9,7 +9,8 @@
       >
         New Task
       </button>
-      <base-modal />
+      <task-form v-if="$store.state.formModal" />
+      <task-confirm v-if="$store.state.confirmModal" />
       <!--Todo List-->
       <base-container
         class="bg-primary md:w-[80%] w-[95%] min-w-[300px] max-h-[60vh] xl:max-h-none grid grid-cols-1 xl:grid-cols-3 gap-6 overflow-auto"
@@ -33,11 +34,15 @@
 <script lang="ts">
 import HomeTitle from "./components/HomeTitle.vue";
 import TaskItem from "./components/Todo/TaskItem.vue";
+import TaskForm from "./components/Todo/TaskForm.vue";
+import TaskConfirm from "./components/Todo/TaskConfirm.vue";
 
 export default {
   components: {
     HomeTitle,
     TaskItem,
+    TaskForm,
+    TaskConfirm,
   },
   data() {
     return {

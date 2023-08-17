@@ -1,16 +1,18 @@
 <template>
-  <h2 class="text-center text-lg font-bold">Confirm</h2>
-  <h2 class="my-10 text-center">
-    Do you want to remove Task "{{ currentTask.description }}" ?
-  </h2>
-  <div class="flex justify-center gap-2 text-white">
-    <base-button @click="removeTask" class="bg-primary text-white grow"
-      ><font-awesome-icon icon="fa-solid fa-check"
-    /></base-button>
-    <base-button @click="closeModal" class="bg-[#ff0000a9] text-white grow"
-      ><font-awesome-icon icon="fa-solid fa-xmark"
-    /></base-button>
-  </div>
+  <base-modal>
+    <h2 class="text-center text-lg font-bold">Confirm</h2>
+    <h2 class="my-10 text-center">
+      Do you want to remove Task "{{ currentTask.description }}" ?
+    </h2>
+    <div class="flex justify-center gap-2 text-white">
+      <base-button @click="removeTask" class="bg-primary text-white grow"
+        ><font-awesome-icon icon="fa-solid fa-check"
+      /></base-button>
+      <base-button @click="closeModal" class="bg-[#ff0000a9] text-white grow">
+        <font-awesome-icon icon="fa-solid fa-xmark" />
+      </base-button>
+    </div>
+  </base-modal>
 </template>
 
 <script lang="ts">
