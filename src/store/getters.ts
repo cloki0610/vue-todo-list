@@ -1,16 +1,27 @@
-import { StoreState, Task } from "./index";
+import { ref, computed } from "vue";
+import { defineStore } from "pinia";
+import type { Task } from "./interface.ts";
 
-export default {
-  HAS_TASK(state: StoreState) {
-    return state.todoList && state.todoList.length > 0;
-  },
-  GET_TASK(state: StoreState) {
-    let itemIndex = state.todoList.findIndex(
-      (item: Task) => item.id === state.selectTask
-    );
-    return state.todoList[itemIndex];
-  },
-  IS_MODAL_OPEN(state: StoreState) {
-    return state.formModal || state.confirmModal;
-  },
-};
+export const useState = defineStore("state", () => {
+    // state
+    const todoList = ref<Task[]>([]);
+    const errorMsg = ref<string>("");
+    const confirmModal = ref<boolean>(false);
+    const formModal = ref<boolean>(false);
+    const formType = ref<"ADD" | "UPDATE">("ADD");
+    const selectTask = ref<string | null>(null);
+    // computed
+    const hasTask = computed(() => todoList.value && todoList.value.length > 0);
+    const isModalOpen = computed(() => formModal || confirmModal);
+
+    return {
+        todoList,
+        errorMsg,
+        confirmModal,
+        formModal,
+        formType,
+        selectTask,
+        hasTask,
+        isModalOpen,
+    };
+});

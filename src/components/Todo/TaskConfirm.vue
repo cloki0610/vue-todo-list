@@ -1,13 +1,14 @@
 <template>
   <base-modal>
     <h2 class="text-center text-lg font-bold">Confirm</h2>
-    <h2 class="my-10 text-center">
+    <h2 class="my-10 text-center" v-if="currentTask">
       Do you want to remove Task "{{ currentTask.description }}" ?
     </h2>
-    <div class="flex justify-center gap-2 text-white">
-      <base-button @click="removeTask" class="bg-primary text-white grow"
-        ><font-awesome-icon icon="fa-solid fa-check"
-      /></base-button>
+    <h2 v-else="currentTask">No class Selected</h2>
+    <div class="flex justify-center gap-2 text-white" v-if="currentTask">
+      <base-button @click="removeTask"
+        class="bg-primary text-white grow"><font-awesome-icon
+          icon="fa-solid fa-check" /></base-button>
       <base-button @click="closeModal" class="bg-[#ff0000a9] text-white grow">
         <font-awesome-icon icon="fa-solid fa-xmark" />
       </base-button>
@@ -15,35 +16,42 @@
   </base-modal>
 </template>
 
-<script lang="ts">
-export default {
-  data() {
-    return {
-      currentTask: {
-        id: "",
-        description: "null",
-        done: false,
-      },
-    };
-  },
-  methods: {
-    removeTask() {
-      this.$store.commit("DELETE_TASK", this.currentTask);
-      this.$store.commit("RESET_SELECT");
-      this.$store.commit("CLOSE_MODAL");
-    },
-    closeModal() {
-      this.currentTask = {
-        id: "",
-        description: "null",
-        done: false,
-      };
-      this.$store.commit("RESET_SELECT");
-      this.$store.commit("CLOSE_MODAL");
-    },
-  },
-  mounted() {
-    this.currentTask = this.$store.getters["GET_TASK"];
-  },
+<script setup lang="ts">
+import { ref, onMounted, Ref } from "vue";
+import { useTaskStore } from '../../store/task';
+import { Task } from "../../store/interface";
+
+const taskStore = useTaskStore();
+
+const currentTask: Ref<Task | undefined> = ref({
+  id: "",
+  description: "null",
+  done: false,
+});
+
+onMounted(() => {
+  if (!taskStore.selectTask) {
+    taskStore.closeModal();
+    return;
+  }
+  return currentTask.value = taskStore.getTask(taskStore.selectTask);
+});
+
+const removeTask = () => {
+  if (currentTask.value) {
+    taskStore.deleteTask(currentTask.value);
+    taskStore.resetSelect();
+    taskStore.closeModal();
+  }
+};
+
+const closeModal = () => {
+  currentTask.value = {
+    id: "",
+    description: "null",
+    done: false,
+  };
+  taskStore.resetSelect();
+  taskStore.closeModal();
 };
 </script>
